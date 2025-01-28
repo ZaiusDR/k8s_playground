@@ -20,6 +20,7 @@ jobs:
         uses: super-linter/super-linter/slim@v7.2.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANSIBLE_DIRECTORY: infrastructure/ansible
       - name: Get AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
