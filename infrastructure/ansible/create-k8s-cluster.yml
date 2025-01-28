@@ -2,5 +2,5 @@
 - name: Deploy K8s Cluster
   hosts: localhost
   roles:
-    - create-ec2-instances
+    - create_ec2_instances
 
