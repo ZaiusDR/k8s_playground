@@ -2,7 +2,8 @@
 name: K8s Infra Deployment
 on:
   push:
-    - main
+    branches:
+      - main
 permissions:
   id-token: write
   contents: read
