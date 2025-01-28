@@ -1,6 +1,20 @@
 ---
+- name: Get Latest Ubuntu 24.04 LTS AMI Id
+  set_fact:
+    ubuntu_ami_id: "{{ lookup('amazon.aws.aws_ssm', ubuntu_ami_ssm_parameter_path) }}"
+
 - name: Create Instances Key Pair
   amazon.aws.ec2_key:
-    name: k8s-cluster-key-pair
+    name: "{{ key_pair_name }}"
   no_log: true
   register: k8s_cluster_key_pair
+
+- name: Create Control-plane Instance
+  amazon.aws.ec2_instance:
+    key_name: "{{ key_pair_name }}"
+    instance_type: t3.micro
+    image_id: "{{ ubuntu_ami_id }}"
+    count: 1
+    tags:
+      Name: control-plane01
+      Cluster: k8s-cluster-node

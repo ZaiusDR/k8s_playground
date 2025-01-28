@@ -1,0 +1,3 @@
+---
+key_pair_name: k8s-cluster-key-pair
+ubuntu_ami_ssm_parameter_path: /aws/service/canonical/ubuntu/server/24.04/stable/current/amd64/hvm/ebs-gp3/ami-id
