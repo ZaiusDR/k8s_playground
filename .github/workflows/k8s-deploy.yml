@@ -1,0 +1,27 @@
+---
+name: K8s Infra Deployment
+on:
+  push:
+    - main
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  provision-k8s-cluster:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        use: actions/checkout@v4
+      - name: Get AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: eu-west-3
+          role-to-assume: arn:aws:iam::326499071401:role/github-actions-k8s-playground
+      - name: Setup Python3
+        use: actions/setup-python@v5
+        with:
+          python-version: 3.13
+      - name: Install Ansible
+        run: pip3 install -r requirements.txt
+      - name: Provision EC2 instances
+        run: ansible-playbook infrastructure/ansible/create-k8s-cluster.yml

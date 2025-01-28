@@ -1,0 +1,6 @@
+---
+- name: Create Instances Key Pair
+  amazon.aws.ec2_key:
+    name: k8s-cluster-key-pair
+  no_log: true
+  register: k8s_cluster_key_pair
