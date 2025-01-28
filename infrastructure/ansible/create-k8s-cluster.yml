@@ -5,7 +5,7 @@
     - create_ec2_instances
 
 - name: Provision common components
-  hosts: all
+  hosts: aws_ec2
   roles:
     - install_common_components
 
