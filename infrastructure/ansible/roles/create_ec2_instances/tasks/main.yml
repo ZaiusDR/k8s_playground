@@ -3,17 +3,50 @@
   set_fact:
     ubuntu_ami_id: "{{ lookup('amazon.aws.aws_ssm', ubuntu_ami_ssm_parameter_path) }}"
 
-- name: Create Instances Key Pair
-  amazon.aws.ec2_key:
-    name: "{{ key_pair_name }}"
-  no_log: true
-  register: k8s_cluster_key_pair
+- name: Create SSH Access Security Group
+  amazon.aws.ec2_security_group:
+    name: "ssh-access-sg"
+    description: "Security group for accessing by SSH"
+    vpc_id: "{{ vpc_id }}"
+    rules:
+      - proto: tcp
+        from_port: "22"
+        to_port: "22"
+        cidr_ip: "0.0.0.0/0"
+  register: ssh_sg
+
+- name: Create Control Plane Security Group
+  amazon.aws.ec2_security_group:
+    name: "control-plane-sg"
+    description: "Security group for Control Plane Node"
+    vpc_id: "{{ vpc_id }}"
+    rules:
+      - proto: tcp
+        from_port: "6443"
+        to_port: "6443"
+        cidr_ip: "{{ vpc_cidr }}"
+  register: control_plane_sg
+
+- name: Create Nodes Security Group
+  amazon.aws.ec2_security_group:
+    name: "nodes-sg"
+    description: "Security group for Nodes"
+    vpc_id: "{{ vpc_id }}"
+    rules:
+      - proto: tcp
+        from_port: "6443"
+        to_port: "6443"
+        cidr_ip: "{{ vpc_cidr }}"
+  register: nodes_sg
 
 - name: Create Control-plane Instance
   amazon.aws.ec2_instance:
     key_name: "{{ key_pair_name }}"
     instance_type: t3.micro
     image_id: "{{ ubuntu_ami_id }}"
+    security_groups:
+      - "{{ ssh_sg.group_id }}"
+      - "{{ control_plane_sg.group_id }}"
     wait: yes
     exact_count: 1
     tags:
@@ -23,11 +56,14 @@
       tag:Name: "control-plane01"
       instance-state-name: "running"
 
-- name: Create Worker Nodes Instances
+- name: Create Node Instances
   amazon.aws.ec2_instance:
     key_name: "{{ key_pair_name }}"
     instance_type: t3.micro
     image_id: "{{ ubuntu_ami_id }}"
+    security_groups:
+      - "{{ ssh_sg.group_id }}"
+      - "{{ control_plane_sg.group_id }}"
     wait: yes
     exact_count: 1
     tags:
