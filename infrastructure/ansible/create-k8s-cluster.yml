@@ -4,3 +4,8 @@
   roles:
     - create_ec2_instances
 
+- name: Provision common components
+  hosts: all
+  roles:
+    - install_common_components
+
