@@ -45,5 +45,4 @@ jobs:
             chmod 0600 ./infrastructure/ansible/id_rsa
       - name: Provision EC2 instances
         run: ansible-playbook create-k8s-cluster.yml
-        with:
-          working-directory: ./infrastructure/ansible
+        working-directory: ./infrastructure/ansible
