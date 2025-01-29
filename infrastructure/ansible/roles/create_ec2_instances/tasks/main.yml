@@ -53,6 +53,7 @@
     tags:
       Name: "control-plane01"
       Cluster: "k8s-cluster-node"
+      Role: "control-plane"
     filters:
       tag:Name: "control-plane01"
       instance-state-name: "running"
@@ -71,6 +72,7 @@
     tags:
       Name: "node0{{ item }}"
       Cluster: "k8s-cluster-node"
+      Role: "worker"
     filters:
       tag:Name: "node0{{ item }}"
       instance-state-name: "running"
