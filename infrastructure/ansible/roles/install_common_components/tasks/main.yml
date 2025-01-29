@@ -3,3 +3,4 @@
   ansible.builtin.apt:
     name: containerd
     state: present
+    update_cache: true

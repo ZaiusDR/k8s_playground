@@ -1,11 +1,14 @@
 ---
 - name: Deploy K8s Cluster
   hosts: localhost
+  gather_facts: false
   roles:
     - create_ec2_instances
 
 - name: Provision common components
   hosts: aws_ec2
+  gather_facts: true
+  become: true
   roles:
     - install_common_components
 
