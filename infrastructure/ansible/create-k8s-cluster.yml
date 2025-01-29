@@ -19,3 +19,9 @@
   roles:
     - configure_control_plane
 
+- name: Configure Worker Nodes
+  hosts: Role_worker
+  gather_facts: true
+  become: true
+  roles:
+    - configure_worker_nodes

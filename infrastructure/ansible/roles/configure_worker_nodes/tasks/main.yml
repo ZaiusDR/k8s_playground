@@ -1,0 +1,5 @@
+---
+- name: Run join node command
+  ansible.builtin.command:
+    cmd: "{{ hostvars['k8s_token_holder']['join_command'] }}"
+    creates: /etc/kubernetes/kubelet.conf

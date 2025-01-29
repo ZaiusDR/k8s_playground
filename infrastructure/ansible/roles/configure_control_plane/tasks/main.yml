@@ -24,3 +24,13 @@
     - "source <(kubectl completion bash)"
     - "alias k=kubectl"
     - "complete -o default -F __start_kubectl k"
+
+- name: Generate join node command
+  ansible.builtin.command:
+    cmd: kubeadm token create --print-join-command --ttl 5m
+  register: kubeadm_join_command
+
+- name: Add join node command to Dummy host
+  ansible.builtin.add_host:
+    name: "k8s_token_holder"
+    join_command: "{{ kubeadm_join_command.stdout }}"
