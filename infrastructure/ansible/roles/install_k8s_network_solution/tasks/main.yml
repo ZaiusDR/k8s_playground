@@ -1,0 +1,4 @@
+---
+- name: Install Flannel
+  kubernetes.core.k8s:
+    src: https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml

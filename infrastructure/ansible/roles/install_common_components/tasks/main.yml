@@ -54,3 +54,7 @@
   ansible.builtin.systemd_service:
     name: kubelet
     enabled: true
+
+- name: Enable Network Solution Kernel Module
+  community.general.modprobe:
+    name: br_netfilter

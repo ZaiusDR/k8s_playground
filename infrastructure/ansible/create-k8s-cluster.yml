@@ -25,3 +25,10 @@
   become: true
   roles:
     - configure_worker_nodes
+
+- name: Install Network Solution
+  hosts: Role_control_plane
+  gather_facts: true
+  become: true
+  roles:
+    - install_k8s_network_solution
