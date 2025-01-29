@@ -42,12 +42,13 @@
 - name: Create Control-plane Instance
   amazon.aws.ec2_instance:
     key_name: "{{ key_pair_name }}"
-    instance_type: t3.micro
+    instance_type: "{{ instance_type }}"
     image_id: "{{ ubuntu_ami_id }}"
     security_groups:
       - "{{ ssh_sg.group_id }}"
       - "{{ control_plane_sg.group_id }}"
     wait: yes
+    state: started
     exact_count: 1
     tags:
       Name: "control-plane01"
@@ -59,12 +60,13 @@
 - name: Create Node Instances
   amazon.aws.ec2_instance:
     key_name: "{{ key_pair_name }}"
-    instance_type: t3.micro
+    instance_type: "{{ instance_type }}"
     image_id: "{{ ubuntu_ami_id }}"
     security_groups:
       - "{{ ssh_sg.group_id }}"
       - "{{ control_plane_sg.group_id }}"
     wait: yes
+    state: started
     exact_count: 1
     tags:
       Name: "node0{{ item }}"
