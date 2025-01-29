@@ -41,7 +41,7 @@ jobs:
         run: pip3 install -r requirements.txt
       - name: Prepare Ansible Key-Pair
         run: |
-          echo ${{ secrets.ANSIBLE_KEY_PAIR }} > ./infrastructure/ansible/id_rsa && \
+          echo "${{ secrets.ANSIBLE_KEY_PAIR }}" > ./infrastructure/ansible/id_rsa && \
             chmod 0600 ./infrastructure/ansible/id_rsa
       - name: Provision EC2 instances
         run: ansible-playbook create-k8s-cluster.yml
