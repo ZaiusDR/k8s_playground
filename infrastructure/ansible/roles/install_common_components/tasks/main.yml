@@ -4,3 +4,45 @@
     name: containerd
     state: present
     update_cache: true
+
+- name: Create ContainerD config directory
+  file:
+    path: /etc/containerd
+    state: directory
+
+- name: Copy ContainerD Config
+  ansible.builtin.copy:
+    src: containerd.toml
+    dest: /etc/containerd/config.toml
+  register: containerd_config
+
+- name: Enable and restart ContainerD Service
+  ansible.builtin.systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: containerd
+    enabled: true
+  when: containerd_config.changed
+
+- name: Add K8s repository Signing Key
+  ansible.builtin.apt_key:
+    url: "https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb/Release.key"
+    keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+- name: Add K8s repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb/ /"
+    state: present
+    filename: kubernetes
+
+- name: Install Kubelet, Kubeadm and Kubectl
+  ansible.builtin.apt:
+    pkg:
+      - kubelet
+      - kubeadm
+      - kubectl
+
+- name: Enable Kubelet service
+  ansible.builtin.systemd_service:
+    name: kubelet
+    enabled: true
