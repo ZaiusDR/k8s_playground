@@ -4,8 +4,16 @@ plugin: amazon.aws.aws_ec2
 regions:
   - eu-west-3
 
+keyed_groups:
+  - key: tags.Role
+    prefix: Role_
+    separator: ""
+
 filters:
   instance-state-name: running
 
 hostnames:
-  - dns-name
+  - "tag:Name"
+
+compose:
+  ansible_host: public_ip_address
