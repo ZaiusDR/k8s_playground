@@ -1,0 +1,26 @@
+---
+- name: Init Kubeadm
+  ansible.builtin.command:
+    cmd: "kubeadm init --pod-network-cidr={{ pod_network_cidr | quote }}"
+    creates: /etc/kubernetes/manifests/kube-apiserver.yaml
+
+- name: Create Kube Config folder
+  ansible.builtin.file:
+    path: /root/.kube
+    state: directory
+
+- name: Copy Kube Config in the default folder
+  ansible.builtin.copy:
+    src: /etc/kubernetes/admin.conf
+    dest: /root/.kube/config
+    remote_src: true
+
+- name: Set Kubectl Autocomplete and Alias
+  ansible.builtin.lineinfile:
+    path: /root/.bashrc
+    regexp: '^{{ item }}'
+    line: "{{ item }}"
+  loop:
+    - "source <(kubectl completion bash)"
+    - "alias k=kubectl"
+    - "complete -o default -F __start_kubectl k"

@@ -12,3 +12,10 @@
   roles:
     - install_common_components
 
+- name: Configure Control Plane node
+  hosts: Role_control_plane
+  gather_facts: true
+  become: true
+  roles:
+    - configure_control_plane
+
