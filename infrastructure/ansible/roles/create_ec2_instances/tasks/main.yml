@@ -77,3 +77,6 @@
       tag:Name: "node0{{ item }}"
       instance-state-name: "running"
   loop: "{{ range(1, 3) | list }}"
+
+- name: Refresh Dynamic Inventory
+  ansible.builtin.meta: refresh_inventory
