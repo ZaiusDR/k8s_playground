@@ -21,7 +21,7 @@
     description: "Security group for Control Plane Node"
     vpc_id: "{{ vpc_id }}"
     rules:
-      - proto: all
+      - proto: tcp
         ports: "{{ control_plane_ports_tcp }}"
         cidr_ip: "{{ vpc_cidr }}"
       - proto: udp
