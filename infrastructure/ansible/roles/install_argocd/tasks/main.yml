@@ -26,8 +26,13 @@
       apiVersion: argoproj.io/v1alpha1
       kind: Application
       metadata:
-        namespace: "{{ traefik_namespace }}"
+        name: ingress-controller
+        namespace: "{{ argocd_namespace }}"
       spec:
+        project: default
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: "{{ traefik_namespace }}"
         sources:
           - repoUrl: "https://traefik.github.io/charts"
             chart: traefik
