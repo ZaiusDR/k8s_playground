@@ -41,5 +41,5 @@
 
 - name: Install Helm binary
   community.general.snap:
-    - name: helm
-      classic: true
+    name: helm
+    classic: true
