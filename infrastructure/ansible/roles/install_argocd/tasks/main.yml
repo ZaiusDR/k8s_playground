@@ -1,11 +1,39 @@
 ---
 - name: Create ArgoCD Namespace
   kubernetes.core.k8s:
-    name: argocd
+    name: "{{ argocd_namespace }}"
     api_version: v1
     kind: Namespace
 
 - name: Install ArgoCD Non-HA
   kubernetes.core.k8s:
     src: "https://raw.githubusercontent.com/argoproj/argo-cd/v{{ argocd_version }}/manifests/install.yaml"
-    namespace: argocd
+    namespace: "{{ argocd_namespace }}"
+
+- name: Wait for ArgoCD to be ready
+  ansible.builtin.wait_for:
+    timeout: 60
+
+- name: Create Traefik Namespace
+  kubernetes.core.k8s:
+    name: "{{ traefik_namespace }}"
+    api_version: v1
+    kind: Namespace
+
+- name: Install Traefik Application
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: argoproj.io/v1alpha1
+      kind: Application
+      metadata:
+        namespace: "{{ traefik_namespace }}"
+      spec:
+        sources:
+          - repoUrl: "https://traefik.github.io/charts"
+            chart: traefik
+            targetRevision: "{{ traefik_helm_version }}"
+            helm:
+              valueFiles:
+                - $values/argo-apps/ingress-controller/values.yml
+          - repoUrl: "https://github.com/ZaiusDR/k8s_playground.git"
+            targetRevision: HEAD

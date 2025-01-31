@@ -38,3 +38,8 @@
 - name: Install Python Kubernetes module
   ansible.builtin.apt:
     name: python3-kubernetes
+
+- name: Install Helm binary
+  community.general.snap:
+    - name: helm
+      classic: true
