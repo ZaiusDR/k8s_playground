@@ -34,11 +34,11 @@
           server: https://kubernetes.default.svc
           namespace: "{{ traefik_namespace }}"
         sources:
-          - repoUrl: "https://traefik.github.io/charts"
+          - repoURL: "https://traefik.github.io/charts"
             chart: traefik
             targetRevision: "{{ traefik_helm_version }}"
             helm:
               valueFiles:
                 - $values/argo-apps/ingress-controller/values.yml
-          - repoUrl: "https://github.com/ZaiusDR/k8s_playground.git"
+          - repoURL: "https://github.com/ZaiusDR/k8s_playground.git"
             targetRevision: HEAD
