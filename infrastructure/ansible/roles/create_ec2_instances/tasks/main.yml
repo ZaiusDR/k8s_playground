@@ -21,9 +21,11 @@
     description: "Security group for Control Plane Node"
     vpc_id: "{{ vpc_id }}"
     rules:
-      - proto: tcp
-        from_port: "6443"
-        to_port: "6443"
+      - proto: all
+        ports: "{{ control_plane_ports_tcp }}"
+        cidr_ip: "{{ vpc_cidr }}"
+      - proto: udp
+        ports: "{{ udp_ports }}"
         cidr_ip: "{{ vpc_cidr }}"
   register: control_plane_sg
 
@@ -34,8 +36,10 @@
     vpc_id: "{{ vpc_id }}"
     rules:
       - proto: tcp
-        from_port: "6443"
-        to_port: "6443"
+        ports: "{{ worker_ports_tcp }}"
+        cidr_ip: "{{ vpc_cidr }}"
+      - proto: udp
+        ports: "{{ udp_ports }}"
         cidr_ip: "{{ vpc_cidr }}"
   register: nodes_sg
 
@@ -65,7 +69,7 @@
     image_id: "{{ ubuntu_ami_id }}"
     security_groups:
       - "{{ ssh_sg.group_id }}"
-      - "{{ control_plane_sg.group_id }}"
+      - "{{ nodes_sg.group_id }}"
     wait: yes
     state: started
     exact_count: 1

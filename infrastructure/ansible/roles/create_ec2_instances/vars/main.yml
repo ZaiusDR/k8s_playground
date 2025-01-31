@@ -4,3 +4,20 @@ key_pair_name: k8s-cluster-key-pair
 ubuntu_ami_ssm_parameter_path: /aws/service/canonical/ubuntu/server/24.04/stable/current/amd64/hvm/ebs-gp3/ami-id
 vpc_id: vpc-5fe8b036
 vpc_cidr: 172.31.0.0/16
+control_plane_ports_tcp:
+  - "6443" # kube-apiserver
+  - "10250" # kubelet
+  - "10256" # kube-proxy
+  - "53" # TCP DNS
+  - "9153" # TCP DNS
+
+worker_ports_tcp:
+  - "10250" # kubelet
+  - "10256" # kube-proxy
+  - "30000-32767" # node-ports
+  - "53" # TCP DNS
+  - "9153" # TCP DNS
+
+udp_ports:
+  - "53" # UDP DNS
+  - "8472" # flannel-vxlan
