@@ -17,6 +17,7 @@
       configs:
         params:
           server.insecure: true
+          server.rootpath: /argocd
 
 - name: Install Traefik Application
   kubernetes.core.k8s:
@@ -61,7 +62,7 @@
           - web
         routes:
           - kind: Rule
-            match: PathPrefix(`/`)
+            match: PathPrefix(`/argocd`)
             priority: 10
             services:
               - name: argocd-server
