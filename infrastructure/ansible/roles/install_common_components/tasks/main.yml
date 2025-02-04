@@ -10,7 +10,6 @@
 - name: install ContainerD
   ansible.builtin.apt:
     name: containerd
-    state: present
     update_cache: true
 
 - name: Create ContainerD config directory

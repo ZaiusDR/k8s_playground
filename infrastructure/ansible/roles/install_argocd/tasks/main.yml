@@ -49,18 +49,21 @@
           syncOptions:
             - ApplyOutOfSyncOnly=true
 
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: argocd-server
-  namespace: argocd
-spec:
-  entryPoints:
-    - web
-  routes:
-    - kind: Rule
-      match: PathPrefix(`/`)
-      priority: 10
-      services:
-        - name: argocd-server
-          port: 80
+- name: Setup ArgoCD Ingress
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: traefik.io/v1alpha1
+      kind: IngressRoute
+      metadata:
+        name: argocd-server
+        namespace: argocd
+      spec:
+        entryPoints:
+          - web
+        routes:
+          - kind: Rule
+            match: PathPrefix(`/`)
+            priority: 10
+            services:
+              - name: argocd-server
+                port: 80

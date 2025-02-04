@@ -22,3 +22,7 @@ worker_ports_tcp:
 udp_ports:
   - "53" # UDP DNS
   - "8472" # flannel-vxlan
+
+haproxy_ports:
+  - "80"
+  - "443"

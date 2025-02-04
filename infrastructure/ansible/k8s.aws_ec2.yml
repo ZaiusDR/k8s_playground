@@ -8,6 +8,9 @@ keyed_groups:
   - key: tags.Role
     prefix: Role_
     separator: ""
+  - key: tags.Cluster
+    prefix: Cluster_
+    separator: ""
 
 filters:
   instance-state-name: running
