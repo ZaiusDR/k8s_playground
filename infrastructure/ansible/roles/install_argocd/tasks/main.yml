@@ -18,12 +18,6 @@
         params:
           server.insecure: true
 
-- name: Create Traefik Namespace
-  kubernetes.core.k8s:
-    name: "{{ traefik_namespace }}"
-    api_version: v1
-    kind: Namespace
-
 - name: Install Traefik Application
   kubernetes.core.k8s:
     definition:
@@ -51,6 +45,7 @@
           automated:
             selfHeal: true
           syncOptions:
+            - CreateNamespace=true
             - ApplyOutOfSyncOnly=true
 
 - name: Setup ArgoCD Ingress
