@@ -1,18 +1,22 @@
 ---
-- name: Create ArgoCD Namespace
-  kubernetes.core.k8s:
-    name: "{{ argocd_namespace }}"
-    api_version: v1
-    kind: Namespace
+- name: Add ArgoCD Helm Repo
+  kubernetes.core.helm_repository:
+    name: argocd
+    repo_url: "https://argoproj.github.io/argo-helm"
 
-- name: Install ArgoCD Non-HA
-  kubernetes.core.k8s:
-    src: "https://raw.githubusercontent.com/argoproj/argo-cd/v{{ argocd_version }}/manifests/install.yaml"
-    namespace: "{{ argocd_namespace }}"
-
-- name: Wait for ArgoCD to be ready
-  ansible.builtin.wait_for:
-    timeout: 60
+- name: Install ArgoCD Helm Chart
+  kubernetes.core.helm:
+    name: argocd
+    chart_ref: argocd/argo-cd
+    update_repo_cache: true
+    release_namespace: argocd
+    create_namespace: true
+    wait: true
+    atomic: true
+    values:
+      configs:
+        params:
+          server.insecure: true
 
 - name: Create Traefik Namespace
   kubernetes.core.k8s:

@@ -2,7 +2,9 @@
 - name: Install Flannel
   kubernetes.core.k8s:
     src: https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+  register: install_flannel
 
 - name: Wait for nodes to be ready
   ansible.builtin.wait_for:
     timeout: 30
+  when: install_flannel.changed
