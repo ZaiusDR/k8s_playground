@@ -1,7 +1,7 @@
 ports:
   web:
-    port: 30080
+    nodePort: 30080
   websecure:
-    port: 30443
+    nodePort: 30443
 service:
   type: NodePort
