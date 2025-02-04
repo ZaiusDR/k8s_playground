@@ -42,3 +42,25 @@
                 - $values/argo-apps/ingress-controller/values.yml
           - repoURL: "https://github.com/ZaiusDR/k8s_playground.git"
             targetRevision: HEAD
+            ref: values
+        syncPolicy:
+          automated:
+            selfHeal: true
+          syncOptions:
+            - ApplyOutOfSyncOnly=true
+
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: argocd-server
+  namespace: argocd
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: PathPrefix(`/`)
+      priority: 10
+      services:
+        - name: argocd-server
+          port: 80
