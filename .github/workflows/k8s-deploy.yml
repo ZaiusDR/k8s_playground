@@ -43,6 +43,6 @@ jobs:
         run: |
           echo "${{ secrets.ANSIBLE_KEY_PAIR }}" > ./infrastructure/ansible/id_rsa && \
             chmod 0600 ./infrastructure/ansible/id_rsa
-      - name: Provision EC2 instances
+      - name: Provision K8s Cluster
         run: ansible-playbook create-k8s-cluster.yml
         working-directory: ./infrastructure/ansible

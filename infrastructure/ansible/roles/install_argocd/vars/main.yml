@@ -1,5 +1,2 @@
 ---
-argocd_version: "2.14.0-rc7"
 argocd_namespace: "argocd"
-traefik_namespace: "traefik-v2"
-traefik_helm_version: "34.2.0"

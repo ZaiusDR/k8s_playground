@@ -35,7 +35,7 @@
           server: https://kubernetes.default.svc
         project: default
         source:
-          path: argo-apps
+          path: apps/argo-apps
           repoURL: https://github.com/ZaiusDR/k8s_playground/
           targetRevision: HEAD
         syncPolicy:

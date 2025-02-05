@@ -5,3 +5,9 @@ spec:
   source:
     repoURL: https://github.com/ZaiusDR/k8s_playground
     targetRevision: HEAD
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
