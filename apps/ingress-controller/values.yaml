@@ -1,8 +1,9 @@
 ---
-ports:
-  web:
-    nodePort: 30080
-  websecure:
-    nodePort: 30443
-service:
-  type: NodePort
+traefik:
+  ports:
+    web:
+      nodePort: 30080
+    websecure:
+      nodePort: 30443
+  service:
+    type: NodePort
