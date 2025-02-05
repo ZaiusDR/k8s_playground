@@ -1,3 +1,4 @@
+---
 apiVersion: v2
 name: ingress-controller
 description: Helm Chart to Setup Traefik
