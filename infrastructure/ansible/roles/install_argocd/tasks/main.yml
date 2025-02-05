@@ -19,51 +19,28 @@
           server.insecure: true
           server.rootpath: /argocd
 
-- name: Install Traefik Application
+- name: Install App-of-apps
   kubernetes.core.k8s:
     definition:
       apiVersion: argoproj.io/v1alpha1
       kind: Application
       metadata:
-        name: ingress-controller
-        namespace: "{{ argocd_namespace }}"
+        name: app-of-apps
+        namespace: argocd
+        finalizers:
+          - resources-finalizer.argocd.argoproj.io
       spec:
-        project: default
         destination:
+          namespace: argocd
           server: https://kubernetes.default.svc
-          namespace: "{{ traefik_namespace }}"
-        sources:
-          - repoURL: "https://traefik.github.io/charts"
-            chart: traefik
-            targetRevision: "{{ traefik_helm_version }}"
-            helm:
-              valueFiles:
-                - $values/argo-apps/ingress-controller/values.yml
-          - repoURL: "https://github.com/ZaiusDR/k8s_playground.git"
-            targetRevision: HEAD
-            ref: values
+        project: default
+        source:
+          path: argo-apps
+          repoURL: https://github.com/ZaiusDR/k8s_playground/
+          targetRevision: HEAD
         syncPolicy:
           automated:
             selfHeal: true
           syncOptions:
             - CreateNamespace=true
             - ApplyOutOfSyncOnly=true
-
-- name: Setup ArgoCD Ingress
-  kubernetes.core.k8s:
-    definition:
-      apiVersion: traefik.io/v1alpha1
-      kind: IngressRoute
-      metadata:
-        name: argocd-server
-        namespace: argocd
-      spec:
-        entryPoints:
-          - web
-        routes:
-          - kind: Rule
-            match: PathPrefix(`/argocd`)
-            priority: 10
-            services:
-              - name: argocd-server
-                port: 80
