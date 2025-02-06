@@ -46,6 +46,46 @@
       instance-state-name: "running"
   register: haproxy_info
 
+- name: Create Vault Security Group
+  amazon.aws.ec2_security_group:
+    name: "vault-sg"
+    description: "Security group for Vault Server"
+    vpc_id: "{{ vpc_id }}"
+    rules:
+      - proto: tcp
+        ports: 8200
+        cidr_ip: "{{ vpc_cidr }}"
+  register: vault_sg
+
+- name: Create Vault Instance
+  amazon.aws.ec2_instance:
+    key_name: "{{ key_pair_name }}"
+    instance_type: t3.micro
+    image_id: "{{ ubuntu_ami_id }}"
+    security_groups:
+      - "{{ ssh_sg.group_id }}"
+      - "{{ vault_sg.group_id }}"
+    wait: yes
+    state: started
+    exact_count: 1
+    tags:
+      Name: "vault"
+      Role: "vault"
+    filters:
+      tag:Name: "vault"
+      tag:Role: "vault"
+      instance-state-name: "running"
+  register: vault_info
+
+- name: Create and Attach Vault Volume
+  amazon.aws.ec2_vol:
+    instance: "{{ vault_info['instances'][0]['instance_id'] }}"
+    name: vault-volume
+    volume_size: 2
+    volume_type: gp3
+    device_name: /dev/xvdf
+    encrypted: true
+
 - name: Create Control Plane Security Group
   amazon.aws.ec2_security_group:
     name: "control-plane-sg"

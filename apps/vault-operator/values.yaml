@@ -1,0 +1,7 @@
+---
+vault-secrets-operator:
+  defaultVaultConnection:
+    enabled: true
+    # TODO: Change by DNS
+    address: "http://172.31.15.207:8200"
+    skipTLSVerify: false

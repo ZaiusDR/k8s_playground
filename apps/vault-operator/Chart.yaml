@@ -1,0 +1,10 @@
+---
+apiVersion: v2
+name: vault-operator
+description: Helm Chart to Setup Vault Secrets Operator
+version: 0.1.0
+appVersion: 1.0.0
+dependencies:
+- name: vault-secrets-operator
+  version: "0.9.1"
+  repository: "https://helm.releases.hashicorp.com"

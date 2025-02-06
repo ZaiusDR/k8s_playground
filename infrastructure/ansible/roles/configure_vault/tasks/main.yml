@@ -1,0 +1,66 @@
+---
+- name: Create Vault Volume partition
+  community.general.filesystem:
+    device: /dev/nvme1n1
+    state: present
+    fstype: ext4
+
+- name: Create Vault Data folder
+  ansible.builtin.file:
+    path: "{{ vault_path }}"
+    state: directory
+    owner: vault
+    group: vault
+
+- name: Mount Vault partition
+  ansible.posix.mount:
+    path: "{{ vault_path }}"
+    src: /dev/nvme1n1
+    fstype: ext4
+    state: mounted
+
+- name: Add Hashicorp repository Signing Key
+  ansible.builtin.apt_key:
+    url: "https://apt.releases.hashicorp.com/gpg"
+    keyring: /usr/share/keyrings/hashicorp-archive-keyring.gpg
+
+- name: Add Hashicorp repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com noble main"
+    state: present
+    filename: hashicorp
+
+- name: Install Vault
+  ansible.builtin.apt:
+    name: vault
+    update_cache: true
+
+- name: Generate Vault Private Key with the default values (4096 bits, RSA)
+  openssl_privatekey:
+    path: "{{ vault_path }}/vault-key.pem"
+    owner: vault
+    group: vault
+    mode: '0600'
+
+- name: Generate Vault Certificate
+  openssl_certificate:
+    path: "{{ vault_path }}/vault-cert.pem"
+    privatekey_path: "{{ vault_path }}/vault-key.pem"
+    provider: selfsigned
+    owner: vault
+    group: vault
+    mode: '0600'
+
+- name: Copy Vault Config
+  ansible.builtin.template:
+    src: vault.hcl.j2
+    dest: "/etc/vault.d/vault.hcl"
+  register: vault_config
+
+- name: Enable Vault Service
+  ansible.builtin.systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: vault
+    enabled: true
+  when: vault_config.changed

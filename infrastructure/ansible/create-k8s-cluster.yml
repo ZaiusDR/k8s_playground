@@ -33,6 +33,13 @@
   roles:
     - configure_haproxy
 
+- name: Configure Vault
+  hosts: Role_vault
+  gather_facts: true
+  become: true
+  roles:
+    - configure_vault
+
 - name: Install Networking Components
   hosts: Role_control_plane
   gather_facts: true
