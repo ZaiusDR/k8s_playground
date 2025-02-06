@@ -1,6 +1,6 @@
 ---
 namespace: newrelic
-newrelic-bundle:
+nri-bundle:
   global:
     cluster: K8s_Playground
     lowDataMode: true
