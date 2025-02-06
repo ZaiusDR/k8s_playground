@@ -4,6 +4,8 @@ key_pair_name: k8s-cluster-key-pair
 ubuntu_ami_ssm_parameter_path: /aws/service/canonical/ubuntu/server/24.04/stable/current/amd64/hvm/ebs-gp3/ami-id
 vpc_id: vpc-5fe8b036
 vpc_cidr: 172.31.0.0/16
+k8s_iam_instance_profile: k8s-cluster-node
+vault_iam_instance_profile: vault-server
 control_plane_ports_tcp:
   - "6443" # kube-apiserver
   - "2379-2380" # ETCD

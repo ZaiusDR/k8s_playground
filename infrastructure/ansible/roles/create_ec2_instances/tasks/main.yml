@@ -62,6 +62,7 @@
     key_name: "{{ key_pair_name }}"
     instance_type: t3.micro
     image_id: "{{ ubuntu_ami_id }}"
+    iam_instance_profile: "{{ vault_iam_instance_profile }}"
     security_groups:
       - "{{ ssh_sg.group_id }}"
       - "{{ vault_sg.group_id }}"
@@ -125,6 +126,7 @@
     key_name: "{{ key_pair_name }}"
     instance_type: "{{ instance_type }}"
     image_id: "{{ ubuntu_ami_id }}"
+    iam_instance_profile: "{{ k8s_iam_instance_profile }}"
     security_groups:
       - "{{ ssh_sg.group_id }}"
       - "{{ control_plane_sg.group_id }}"
@@ -144,6 +146,7 @@
     key_name: "{{ key_pair_name }}"
     instance_type: "{{ instance_type }}"
     image_id: "{{ ubuntu_ami_id }}"
+    iam_instance_profile: "{{ k8s_iam_instance_profile }}"
     security_groups:
       - "{{ ssh_sg.group_id }}"
       - "{{ nodes_sg.group_id }}"
@@ -166,6 +169,18 @@
     type: A
     ttl: 300
     value: "{{ haproxy_info['instances'][0]['public_ip_address'] }}"
+    wait: true
+    state: present
+    overwrite: true
+
+- name: Point DNS to Vault
+  amazon.aws.route53:
+    zone: esuarez.info
+    private_zone: true
+    record: vault.esuarez.info
+    type: A
+    ttl: 300
+    value: "{{ vault_info['instances'][0]['private_ip_address'] }}"
     wait: true
     state: present
     overwrite: true
