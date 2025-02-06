@@ -1,0 +1,25 @@
+---
+namespace: newrelic
+newrelic-bundle:
+  global:
+    cluster: K8s_Playground
+    lowDataMode: true
+    customSecretName: new-relic-license-key
+  newrelic-infrastructure:
+    privileged: true
+  kube-state-metrics:
+    image:
+      tag: v2.13.0
+    enabled: true
+  newrelic-prometheus-agent:
+    enabled: true
+    lowDataMode: true
+    config:
+      kubernetes:
+        integrations_filter:
+          enabled: false
+  k8s-agents-operator:
+    enabled: true
+  logging:
+    enabled: true
+    lowDataMode: true

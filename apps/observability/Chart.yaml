@@ -1,0 +1,10 @@
+---
+apiVersion: v2
+name: newrelic-k8s-integration
+description: Helm Chart to Setup NewRelic K8s Integration
+version: 0.1.0
+appVersion: 1.0.0
+dependencies:
+- name: newrelic-bundle
+  version: "5.0.110"
+  repository: "https://helm-charts.newrelic.com"
