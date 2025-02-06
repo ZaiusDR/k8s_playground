@@ -2,6 +2,5 @@
 vault-secrets-operator:
   defaultVaultConnection:
     enabled: true
-    # TODO: Change by DNS
-    address: "https://172.31.15.207:8200"
+    address: "https://vault.esuarez.info:8200"
     skipTLSVerify: true
