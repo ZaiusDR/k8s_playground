@@ -7,4 +7,4 @@ spec:
   mount: aws
   method: aws
   aws:
-    role: k8s-cluster-node
+    role: new-relic
