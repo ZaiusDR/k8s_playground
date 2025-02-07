@@ -8,3 +8,4 @@ spec:
   method: aws
   aws:
     role: new-relic
+    headerValue: vault.esuarez.info
