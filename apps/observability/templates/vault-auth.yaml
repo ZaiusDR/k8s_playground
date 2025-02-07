@@ -1,0 +1,10 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  name: vault-auth-newrelic
+  namespace: {{ .Values.namespace }}
+spec:
+  mount: aws
+  method: aws
+  aws:
+    role: k8s-cluster-node
