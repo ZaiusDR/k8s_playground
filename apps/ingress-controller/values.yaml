@@ -7,3 +7,10 @@ traefik:
       nodePort: 30443
   service:
     type: NodePort
+  certificatesResolvers:
+    leresolver:
+      acme:
+        email: my@example.com
+        storage: acme.json
+        httpChallenge:
+          entryPoint: web
