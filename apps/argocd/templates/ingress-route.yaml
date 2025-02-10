@@ -1,10 +1,9 @@
-# TODO: Migrate to ArgoCD's own Application
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: argocd-server
-  namespace: argocd
+  namespace: {{ .Values.namespace }}
 spec:
   entryPoints:
     - websecure

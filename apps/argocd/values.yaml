@@ -1,0 +1,6 @@
+---
+argocd/argo-cd:
+  configs:
+    params:
+      server.insecure: true
+namespace: argocd
