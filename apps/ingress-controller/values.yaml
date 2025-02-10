@@ -11,6 +11,6 @@ traefik:
     leresolver:
       acme:
         email: my@example.com
-        storage: acme.json
+        storage: /data/acme.json
         httpChallenge:
           entryPoint: web
