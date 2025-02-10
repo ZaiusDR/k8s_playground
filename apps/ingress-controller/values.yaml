@@ -5,6 +5,7 @@ traefik:
       nodePort: 30080
     websecure:
       nodePort: 30443
+      exposedPort: 443
   service:
     type: NodePort
   certificatesResolvers:
