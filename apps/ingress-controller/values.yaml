@@ -10,7 +10,7 @@ traefik:
   certificatesResolvers:
     leresolver:
       acme:
-        email: my@example.com
+        email: acme@grr.la
         storage: /data/acme.json
         httpChallenge:
           entryPoint: web
