@@ -12,5 +12,4 @@ traefik:
       acme:
         email: acme@grr.la
         storage: /data/acme.json
-        httpChallenge:
-          entryPoint: web
+        tlsChallenge: {}

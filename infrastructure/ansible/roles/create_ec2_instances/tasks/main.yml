@@ -97,6 +97,9 @@
         ports: "{{ control_plane_ports_tcp }}"
         cidr_ip: "{{ vpc_cidr }}"
       - proto: tcp
+        ports: "30080"
+        cidr_ip: "{{ haproxy_info['instances'][0]['private_ip_address'] }}/32"
+      - proto: tcp
         ports: "30443"
         cidr_ip: "{{ haproxy_info['instances'][0]['private_ip_address'] }}/32"
       - proto: udp
@@ -113,6 +116,9 @@
       - proto: tcp
         ports: "{{ worker_ports_tcp }}"
         cidr_ip: "{{ vpc_cidr }}"
+      - proto: tcp
+        ports: "30080"
+        cidr_ip: "{{ haproxy_info['instances'][0]['private_ip_address'] }}/32"
       - proto: tcp
         ports: "30443"
         cidr_ip: "{{ haproxy_info['instances'][0]['private_ip_address'] }}/32"
