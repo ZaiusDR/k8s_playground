@@ -35,16 +35,24 @@ defaults
 
 frontend http_front
     bind *:80
-    http-request redirect scheme https if !{ ssl_fc }
+    mode tcp
+    option tcplog
+    default_backend traefik_backend
 
 frontend https_front
     bind *:443
     mode tcp
     option tcplog
-    default_backend traefik_backend
+    default_backend traefik_backend_ssl
 
 backend traefik_backend
-    mode http
+    mode tcp
     server control-plane01  {{ hostvars['control-plane01']['private_ip_address'] }}:30080 check
     server node01  {{ hostvars['node01']['private_ip_address'] }}:30080 check
     server node02  {{ hostvars['node02']['private_ip_address'] }}:30080 check
+
+backend traefik_backend_ssl
+    mode tcp
+    server control-plane01  {{ hostvars['control-plane01']['private_ip_address'] }}:30443 check
+    server node01  {{ hostvars['node01']['private_ip_address'] }}:30443 check
+    server node02  {{ hostvars['node02']['private_ip_address'] }}:30443 check
