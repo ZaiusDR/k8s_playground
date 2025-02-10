@@ -165,7 +165,7 @@
 - name: Point DNS to HAProxy
   amazon.aws.route53:
     zone: esuarez.info
-    record: k8s.esuarez.info
+    record: argocd.esuarez.info
     type: A
     ttl: 300
     value: "{{ haproxy_info['instances'][0]['public_ip_address'] }}"
