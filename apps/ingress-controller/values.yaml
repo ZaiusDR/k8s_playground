@@ -5,7 +5,6 @@ traefik:
       nodePort: 30080
     websecure:
       nodePort: 30443
-      exposedPort: 443
   service:
     type: NodePort
   certificatesResolvers:
@@ -13,4 +12,5 @@ traefik:
       acme:
         email: acme@grr.la
         storage: /data/acme.json
-        tlsChallenge: {}
+        httpChallenge:
+          entryPoint: web
