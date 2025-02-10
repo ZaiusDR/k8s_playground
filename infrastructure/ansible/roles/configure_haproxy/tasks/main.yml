@@ -8,63 +8,63 @@
     name: haproxy
     update_cache: true
 
-- name: Install socat
-  ansible.builtin.apt:
-    name: socat
-
-- name: Add ACME User
-  ansible.builtin.user:
-    name: acme
-    home: /var/lib/acme
-    system: true
-    shell: /usr/bin/false
-    password: '!'
-    groups:
-      - haproxy
-    append: true
-
-- name: Create folder for Acme.sh
-  ansible.builtin.file:
-    path: "{{ acme_home }}"
-    state: directory
-
-- name: Install Git
-  ansible.builtin.apt:
-    name: git
-    update_cache: true
-
-- name: Clone Acme.sh repository
-  ansible.builtin.git:
-    repo: 'https://github.com/acmesh-official/acme.sh.git'
-    dest: /root/acme.sh
-
-- name: Install Acme.sh
-  ansible.builtin.command:
-    cmd: "./acme.sh --install --no-cron --no-profile --home {{ acme_home }}"
-    creates: "{{ acme_home }}/acme.sh"
-    chdir: /root/acme.sh
-
-- name: Link acme.sh script to /usr/local/bin
-  ansible.builtin.file:
-    src: "{{ acme_home }}/acme.sh"
-    dest: /usr/local/bin/acme.sh
-    mode: '0755'
-    state: link
-
-- name: Register Acme.sh account
-  ansible.builtin.shell:
-    cmd: "acme.sh --register-account -m my@example.com | grep ACCOUNT_THUMBPRINT | awk -F'=' '{ print $2}'"
-  become: yes
-  become_user: acme
-  register: account_data
-
-- name: Create folder for certs
-  ansible.builtin.file:
-    path: /etc/haproxy/certs
-    state: directory
-    owner: haproxy
-    group: haproxy
-    mode: '0770'
+#- name: Install socat
+#  ansible.builtin.apt:
+#    name: socat
+#
+#- name: Add ACME User
+#  ansible.builtin.user:
+#    name: acme
+#    home: /var/lib/acme
+#    system: true
+#    shell: /usr/bin/false
+#    password: '!'
+#    groups:
+#      - haproxy
+#    append: true
+#
+#- name: Create folder for Acme.sh
+#  ansible.builtin.file:
+#    path: "{{ acme_home }}"
+#    state: directory
+#
+#- name: Install Git
+#  ansible.builtin.apt:
+#    name: git
+#    update_cache: true
+#
+#- name: Clone Acme.sh repository
+#  ansible.builtin.git:
+#    repo: 'https://github.com/acmesh-official/acme.sh.git'
+#    dest: /root/acme.sh
+#
+#- name: Install Acme.sh
+#  ansible.builtin.command:
+#    cmd: "./acme.sh --install --no-cron --no-profile --home {{ acme_home }}"
+#    creates: "{{ acme_home }}/acme.sh"
+#    chdir: /root/acme.sh
+#
+#- name: Link acme.sh script to /usr/local/bin
+#  ansible.builtin.file:
+#    src: "{{ acme_home }}/acme.sh"
+#    dest: /usr/local/bin/acme.sh
+#    mode: '0755'
+#    state: link
+#
+#- name: Register Acme.sh account
+#  ansible.builtin.shell:
+#    cmd: "acme.sh --register-account -m my@example.com | grep ACCOUNT_THUMBPRINT | awk -F'=' '{ print $2}'"
+#  become: yes
+#  become_user: acme
+#  register: account_data
+#
+#- name: Create folder for certs
+#  ansible.builtin.file:
+#    path: /etc/haproxy/certs
+#    state: directory
+#    owner: haproxy
+#    group: haproxy
+#    mode: '0770'
 
 - name: Copy HAProxy config
   ansible.builtin.template:
@@ -78,25 +78,25 @@
     name: haproxy
   when: haproxy_config.changed
 
-- name: Generate Acme.sh certificate
-  ansible.builtin.command:
-    cmd: "acme.sh --issue -d {{ domain_name }} --stateless"
-    creates: "/var/lib/acme/.acme.sh/{{ domain_name }}_ecc/{{ domain_name }}.cer"
-  become: yes
-  become_user: acme
-
-- name: Deploy Acme.sh certificate
-  ansible.builtin.shell:
-    argv:
-    - "DEPLOY_HAPROXY_HOT_UPDATE=yes"
-    - "DEPLOY_HAPROXY_STATS_SOCKET=UNIX:/run/haproxy/admin.sock"
-    - "DEPLOY_HAPROXY_PEM_PATH=/etc/haproxy/certs"
-    - "acme.sh"
-    - "--deploy"
-    - "-d"
-    - "{{ domain_name }}"
-    - "--deploy-hook"
-    - "haproxy"
-    creates: "/etc/haproxy/certs/{{ domain_name }}.pem"
-  become: yes
-  become_user: acme
+#- name: Generate Acme.sh certificate
+#  ansible.builtin.command:
+#    cmd: "acme.sh --issue -d {{ domain_name }} --stateless"
+#    creates: "/var/lib/acme/.acme.sh/{{ domain_name }}_ecc/{{ domain_name }}.cer"
+#  become: yes
+#  become_user: acme
+#
+#- name: Deploy Acme.sh certificate
+#  ansible.builtin.shell:
+#    argv:
+#    - "DEPLOY_HAPROXY_HOT_UPDATE=yes"
+#    - "DEPLOY_HAPROXY_STATS_SOCKET=UNIX:/run/haproxy/admin.sock"
+#    - "DEPLOY_HAPROXY_PEM_PATH=/etc/haproxy/certs"
+#    - "acme.sh"
+#    - "--deploy"
+#    - "-d"
+#    - "{{ domain_name }}"
+#    - "--deploy-hook"
+#    - "haproxy"
+#    creates: "/etc/haproxy/certs/{{ domain_name }}.pem"
+#  become: yes
+#  become_user: acme

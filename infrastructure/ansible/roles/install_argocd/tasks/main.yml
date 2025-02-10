@@ -17,7 +17,7 @@
       configs:
         params:
           server.insecure: true
-          server.rootpath: /argocd
+#          server.rootpath: /argocd
 
 - name: Install App-of-apps
   kubernetes.core.k8s:

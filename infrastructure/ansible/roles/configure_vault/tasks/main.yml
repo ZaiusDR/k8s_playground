@@ -38,6 +38,7 @@
 - name: Configure Vault Autocomplete
   ansible.builtin.command:
     cmd: "vault -autocomplete-install"
+  ignore_errors: true
 
 - name: Generate Vault Private Key with the default values (4096 bits, RSA)
   openssl_privatekey:
