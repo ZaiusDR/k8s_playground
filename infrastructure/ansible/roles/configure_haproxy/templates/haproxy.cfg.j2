@@ -17,9 +17,6 @@ global
     ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
     ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
 
-    # Acme.sh
-    setenv ACCOUNT_THUMBPRINT {{ account_data['stdout'] }}
-
 defaults
 	log	global
 	mode	http
