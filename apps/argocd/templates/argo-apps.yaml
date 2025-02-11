@@ -6,6 +6,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
+  annotations:
+    "helm.sh/hook": post-install
 spec:
   destination:
     namespace: {{ .Values.namespace }}
