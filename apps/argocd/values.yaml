@@ -4,3 +4,5 @@ argocd/argo-cd:
     params:
       server.insecure: true
 namespace: argocd
+install:
+  ingressRoute: true

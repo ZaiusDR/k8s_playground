@@ -1,45 +1,44 @@
 ---
 - name: Add ArgoCD Helm Repo
-  kubernetes.core.helm_repository:
-    name: argocd
-    repo_url: "https://argoproj.github.io/argo-helm"
+  ansible.builtin.git:
+    repo: "https://github.com/ZaiusDR/k8s_playground.git"
+    dest: /tmp/helm_repo
 
 - name: Install ArgoCD Helm Chart
   kubernetes.core.helm:
     name: argocd
-    chart_ref: argocd/argo-cd
-    update_repo_cache: true
+    chart_ref: /tmp/helm_repo/apps/argocd
+    dependency_update: true
     release_namespace: argocd
     create_namespace: true
     wait: true
     atomic: true
     values:
-      configs:
-        params:
-          server.insecure: true
+      install:
+        ingressRoute: false
 
-- name: Install App-of-apps
-  kubernetes.core.k8s:
-    definition:
-      apiVersion: argoproj.io/v1alpha1
-      kind: Application
-      metadata:
-        name: app-of-apps
-        namespace: argocd
-        finalizers:
-          - resources-finalizer.argocd.argoproj.io
-      spec:
-        destination:
-          namespace: argocd
-          server: https://kubernetes.default.svc
-        project: default
-        source:
-          path: apps/argo-apps
-          repoURL: https://github.com/ZaiusDR/k8s_playground/
-          targetRevision: HEAD
-        syncPolicy:
-          automated:
-            selfHeal: true
-          syncOptions:
-            - CreateNamespace=true
-            - ApplyOutOfSyncOnly=true
+#- name: Install App-of-apps
+#  kubernetes.core.k8s:
+#    definition:
+#      apiVersion: argoproj.io/v1alpha1
+#      kind: Application
+#      metadata:
+#        name: app-of-apps
+#        namespace: argocd
+#        finalizers:
+#          - resources-finalizer.argocd.argoproj.io
+#      spec:
+#        destination:
+#          namespace: argocd
+#          server: https://kubernetes.default.svc
+#        project: default
+#        source:
+#          path: apps/argo-apps
+#          repoURL: https://github.com/ZaiusDR/k8s_playground/
+#          targetRevision: HEAD
+#        syncPolicy:
+#          automated:
+#            selfHeal: true
+#          syncOptions:
+#            - CreateNamespace=true
+#            - ApplyOutOfSyncOnly=true
