@@ -17,6 +17,11 @@ spec:
     path: apps/argocd
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      values:
+        install:
+          ingressRoute: true
+          appOfApps: false
   syncPolicy:
     automated:
       selfHeal: true

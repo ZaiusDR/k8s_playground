@@ -6,3 +6,4 @@ argo-cd:
 namespace: argocd
 install:
   ingressRoute: true
+  appOfApps: true
