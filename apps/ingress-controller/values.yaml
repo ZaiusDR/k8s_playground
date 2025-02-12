@@ -11,6 +11,11 @@ traefik:
     leresolver:
       acme:
         email: acme@grr.la
-        storage: /data/acme.json
+        storage: /ssl-certs/acme.json
         httpChallenge:
           entryPoint: web
+  persistence:
+    enabled: true
+    name: ssl-certs
+    path: /ssl-certs
+    existingClaim: traefik-acme-certs-efs-pvc
