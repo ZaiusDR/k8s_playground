@@ -57,6 +57,13 @@
         cidr_ip: "{{ vpc_cidr }}"
   register: vault_sg
 
+- name: Create Vault KMS Auto-unseal Key
+  amazon.aws.kms_key:
+    alias: vault-auto-unseal
+    description: Vault Auto-Unseal Key
+    tags:
+      Name: vault-auto-unseal
+
 - name: Create Vault Instance
   amazon.aws.ec2_instance:
     key_name: "{{ key_pair_name }}"
@@ -133,6 +140,8 @@
     instance_type: "{{ instance_type }}"
     image_id: "{{ ubuntu_ami_id }}"
     iam_instance_profile: "{{ k8s_iam_instance_profile }}"
+    volumes:
+      - "{{ volume_options }}"
     security_groups:
       - "{{ ssh_sg.group_id }}"
       - "{{ control_plane_sg.group_id }}"
@@ -153,6 +162,8 @@
     instance_type: "{{ instance_type }}"
     image_id: "{{ ubuntu_ami_id }}"
     iam_instance_profile: "{{ k8s_iam_instance_profile }}"
+    volumes:
+      - "{{ volume_options }}"
     security_groups:
       - "{{ ssh_sg.group_id }}"
       - "{{ nodes_sg.group_id }}"
@@ -172,6 +183,17 @@
   amazon.aws.route53:
     zone: esuarez.info
     record: argocd.esuarez.info
+    type: A
+    ttl: 300
+    value: "{{ haproxy_info['instances'][0]['public_ip_address'] }}"
+    wait: true
+    state: present
+    overwrite: true
+
+- name: Point DNS to HAProxy
+  amazon.aws.route53:
+    zone: esuarez.info
+    record: guestbook.esuarez.info
     type: A
     ttl: 300
     value: "{{ haproxy_info['instances'][0]['public_ip_address'] }}"

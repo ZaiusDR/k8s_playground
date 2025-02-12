@@ -1,13 +1,18 @@
-api_addr                = "https://127.0.0.1:8200"
-cluster_addr            = "https://127.0.0.1:8201"
-cluster_name            = "vault"
-disable_mlock           = true
-ui                      = true
+api_addr      = "https://127.0.0.1:8200"
+cluster_addr  = "https://127.0.0.1:8201"
+cluster_name  = "vault"
+disable_mlock = true
+ui            = true
 
 listener "tcp" {
   address       = "0.0.0.0:8200"
   tls_cert_file = "{{ vault_path }}/vault-cert.pem"
   tls_key_file  = "{{ vault_path }}/vault-key.pem"
+}
+
+seal "awskms" {
+  region     = "eu-west-3"
+  kms_key_id = "alias/vault-auto-unseal"
 }
 
 backend "raft" {
