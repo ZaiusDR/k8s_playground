@@ -45,6 +45,12 @@ frontend https_front
     option tcplog
     default_backend traefik_backend_ssl
 
+frontend kubernetes_api
+    bind *:6443
+    mode tcp
+    option tcplog
+    default_backend kube_apiserver
+
 backend traefik_backend
     mode tcp
     server control-plane01  {{ hostvars['control-plane01']['private_ip_address'] }}:30080 check
@@ -56,3 +62,7 @@ backend traefik_backend_ssl
     server control-plane01  {{ hostvars['control-plane01']['private_ip_address'] }}:30443 check
     server node01  {{ hostvars['node01']['private_ip_address'] }}:30443 check
     server node02  {{ hostvars['node02']['private_ip_address'] }}:30443 check
+
+backend kube_apiserver
+    mode tcp
+    server control-plane01  {{ hostvars['control-plane01']['private_ip_address'] }}:6443 check

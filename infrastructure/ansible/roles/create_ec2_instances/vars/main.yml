@@ -28,9 +28,15 @@ udp_ports:
 haproxy_ports:
   - "80"
   - "443"
+  - "6443"
 
 volume_options:
   device_name: /dev/sda1
   ebs:
     volume_size: 16
     delete_on_termination: true
+
+subdomains:
+  - argocd
+  - guestbook
+  - k8s

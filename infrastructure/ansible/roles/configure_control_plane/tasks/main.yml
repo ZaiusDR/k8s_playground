@@ -1,7 +1,7 @@
 ---
 - name: Init Kubeadm
   ansible.builtin.command:
-    cmd: "kubeadm init --pod-network-cidr={{ pod_network_cidr | quote }}"
+    cmd: "kubeadm init --pod-network-cidr={{ pod_network_cidr | quote }} --control-plane-endpoint='k8s.esuarez.info:6443'"
     creates: /etc/kubernetes/manifests/kube-apiserver.yaml
 
 - name: Create Kube Config folder
@@ -14,6 +14,12 @@
     src: /etc/kubernetes/admin.conf
     dest: /root/.kube/config
     remote_src: true
+
+- name: Fetch Kube Config
+  ansible.builtin.fetch:
+    src: /root/.kube/config
+    dest: ~/.kube/config
+    flat: yes
 
 - name: Set Kubectl Autocomplete and Alias
   ansible.builtin.lineinfile:
