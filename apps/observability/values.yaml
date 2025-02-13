@@ -25,3 +25,4 @@ nri-bundle:
   logging:
     enabled: true
     lowDataMode: true
+    endpoint: https://log-api.eu.newrelic.com/log/v1
