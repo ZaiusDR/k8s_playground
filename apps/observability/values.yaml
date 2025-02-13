@@ -5,6 +5,7 @@ nri-bundle:
     cluster: K8s_Playground
     lowDataMode: true
     customSecretName: new-relic-license-key
+    customSecretLicenseKey: licenseKey
   newrelic-infrastructure:
     privileged: true
   kube-state-metrics:
