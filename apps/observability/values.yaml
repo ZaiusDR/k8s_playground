@@ -20,6 +20,8 @@ nri-bundle:
           enabled: false
   k8s-agents-operator:
     enabled: true
+  newrelic-logging:
+    enabled: true
   logging:
     enabled: true
     lowDataMode: true
