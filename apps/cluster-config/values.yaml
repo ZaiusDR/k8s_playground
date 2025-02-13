@@ -1,0 +1,8 @@
+---
+aws-efs-csi-driver:
+  image:
+    repository: public.ecr.aws/efs-csi-driver/amazon/aws-efs-csi-driver
+  controller:
+    serviceAccount:
+      create: true
+      name: efs-csi-controller-sa
