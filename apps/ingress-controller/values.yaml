@@ -19,3 +19,14 @@ traefik:
     name: ssl-certs
     path: /ssl-certs
     existingClaim: traefik-acme-certs-efs-pvc
+  deployment:
+    initContainers:
+    - name: volume-permissions
+      image: busybox:1.36
+      command:
+        - "sh"
+        - "-c"
+        - "chmod 600 /ssl-certs/acme.json && chown 65532:65532 /ssl-certs/acme.json"
+      volumeMounts:
+      - name: ssl-certs
+        mountPath: /ssl-certs
