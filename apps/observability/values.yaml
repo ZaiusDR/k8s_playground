@@ -25,3 +25,8 @@ nri-bundle:
     enabled: true
     endpoint: https://log-api.eu.newrelic.com/log/v1
     lowDataMode: true
+
+nr-k8s-otel-collector:
+  cluster: K8s_Playground
+  customSecretName: new-relic-license-key
+  customSecretLicenseKey: licenseKey
