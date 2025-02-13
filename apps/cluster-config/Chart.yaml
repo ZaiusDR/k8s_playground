@@ -8,3 +8,6 @@ dependencies:
 - name: aws-efs-csi-driver
   version: "3.1.6"
   repository: "https://kubernetes-sigs.github.io/aws-efs-csi-driver/"
+- name: metrics-server
+  version: "3.12.2"
+  repository: "https://kubernetes-sigs.github.io/metrics-server/"
