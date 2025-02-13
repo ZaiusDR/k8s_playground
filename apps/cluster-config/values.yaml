@@ -6,3 +6,7 @@ aws-efs-csi-driver:
     serviceAccount:
       create: true
       name: efs-csi-controller-sa
+
+metrics-server:
+  args:
+    - --kubelet-insecure-tls
