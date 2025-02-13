@@ -23,10 +23,7 @@ traefik:
     initContainers:
       - name: volume-permissions
         image: busybox:latest
-        command: [ "sh", "-c", "touch /data/acme.json; chmod -v 600 /data/acme.json" ]
+        command: [ "sh", "-c", "chown 65532:65532 /ssl-certs && touch /ssl-certs/acme.json && chmod -v 600 /ssl-certs/acme.json" ]
         volumeMounts:
           - mountPath: /ssl-certs
             name: ssl-certs
-  podSecurityContext:
-    fsGroup: 65532
-    fsGroupChangePolicy: "OnRootMismatch"
