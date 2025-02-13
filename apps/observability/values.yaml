@@ -21,7 +21,7 @@ nri-bundle:
           enabled: false
   k8s-agents-operator:
     enabled: true
-  logging:
+  newrelic-logging:
     enabled: true
     endpoint: https://log-api.eu.newrelic.com/log/v1
     lowDataMode: true
