@@ -26,7 +26,7 @@ traefik:
       command:
         - "sh"
         - "-c"
-        - "chmod 600 /ssl-certs/acme.json && chown 65532:65532 /ssl-certs/acme.json"
+        - "touch /ssl-certs/acme.json && chmod 600 /ssl-certs/acme.json && chown 65532:65532 /ssl-certs/acme.json"
       volumeMounts:
       - name: ssl-certs
         mountPath: /ssl-certs
