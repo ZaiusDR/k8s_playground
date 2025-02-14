@@ -42,10 +42,12 @@ jobs:
       id: push
       uses: docker/build-push-action@v6
       with:
-        context: ./services/producer-consumer/producer-front
+        context: ./services/telephone/producer-front
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+        build-args:
+          api_url="https://producer-api.esuarez.info"
 
     - name: Generate artifact attestation
       uses: actions/attest-build-provenance@v2
