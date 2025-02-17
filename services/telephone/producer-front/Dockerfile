@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install
 
-ARG api_url="http://localhost:8080/api/v1"
+ARG api_url="http://localhost:3000/"
 ENV VITE_API_URL=$api_url
 
 COPY . .
