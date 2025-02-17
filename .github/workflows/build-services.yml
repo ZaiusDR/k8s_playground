@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        role: [ "producer" ]
+        role: [ "producer", "consumer" ]
         tier: [ "front", "back" ]
 
     permissions:

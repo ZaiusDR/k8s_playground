@@ -1,0 +1,49 @@
+services:
+  localstack-sqs:
+    container_name: localstack-sqs
+    image: localstack/localstack:4.1.1-arm64
+    volumes:
+      - ${PWD}/localstack-sqs.sh:/etc/localstack/init/ready.d/localstack-sqs.sh
+    ports:
+      - "4566:4566"
+  producer-back:
+    container_name: producer-back
+    build:
+      context: producer-back
+    ports:
+      - "3000:3000"
+    environment:
+      AWS_ENDPOINT: http://localstack-sqs:4566
+      AWS_REGION: eu-west-3
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      SQS_QUEUE_URL: http://sqs.eu-west-3.localhost.localstack.cloud:4566/000000000000/telephone-sqs
+  producer-front:
+    container_name: producer-front
+    build:
+      context: producer-front
+      args:
+        api_url: http://localhost:3000
+    ports:
+      - "8080:80"
+  consumer-back:
+    container_name: consumer-back
+    build:
+      context: consumer-back
+    ports:
+      - "3001:3000"
+    environment:
+      AWS_ENDPOINT: http://localstack-sqs:4566
+      AWS_REGION: eu-west-3
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      SQS_QUEUE_URL: http://sqs.eu-west-3.localhost.localstack.cloud:4566/000000000000/telephone-sqs
+  consumer-front:
+    container_name: consumer-front
+    build:
+      context: consumer-front
+      args:
+        api_url: ws://localhost:3001
+    ports:
+      - "8081:80"
+
