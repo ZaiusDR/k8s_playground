@@ -43,7 +43,7 @@ services:
     build:
       context: consumer-front
       args:
-        api_url: ws://localhost:3001
+        ws_url: ws://localhost:3001
     ports:
       - "8081:80"
 

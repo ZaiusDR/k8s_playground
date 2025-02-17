@@ -5,8 +5,8 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install
 
-ARG api_url="http://localhost:3001/"
-ENV VITE_API_URL=$api_url
+ARG ws_url="ws://localhost:3001/"
+ENV VITE_WS_URL=$ws_url
 
 COPY . .
 RUN npm run build
