@@ -1,0 +1,17 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: spire
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`spire-server.esuarez.info`)
+      priority: 10
+      services:
+        - name: spire-server
+          port: 443
+  tls:
+    certResolver: leresolver
