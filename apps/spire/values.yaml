@@ -11,6 +11,15 @@ spire:
         NodeAttestor "aws_iid":
           plugin_data:
             use_instance_metadata: true
+    deploymentType: deployment
+    replicaCount: 2
+    persistence:
+      type: emptyDir
+    keyManager:
+      disk:
+        enabled: false
+      memory:
+        enabled: true
   spire-agent:
     config:
       trustDomain: "esuarez.info"
