@@ -12,11 +12,18 @@ spire:
       enabled: true
       audience: sts.amazonaws.com
     customPlugins:
-      NodeAttestor "aws_iid":
-        plugin_data:
-          use_instance_metadata: true
+      nodeAttestor:
+        aws_iid:
+          plugin_data:
+            use_instance_metadata: true
     keyManager:
       disk:
         enabled: false
       memory:
         enabled: true
+  spire-agent:
+    customPlugins:
+      nodeAttestor:
+        aws_iid:
+          plugin_data:
+            use_instance_metadata: true
