@@ -1,25 +1,22 @@
 ---
 spire:
-  spire-server:
-    config:
+  global:
+    spire:
       trustDomain: "esuarez.info"
-      enableExperimentalAPI: true
+    spire-server:
+      kind: deployment
+      replicaCount: 1
+      persistence:
+        type: emptyDir
       oidc:
         enabled: true
         audience: sts.amazonaws.com
-      plugins:
+      customPlugins:
         NodeAttestor "aws_iid":
           plugin_data:
             use_instance_metadata: true
-    deploymentType: deployment
-    replicaCount: 1
-    persistence:
-      type: emptyDir
-    keyManager:
-      disk:
-        enabled: false
-      memory:
-        enabled: true
-  spire-agent:
-    config:
-      trustDomain: "esuarez.info"
+      keyManager:
+        disk:
+          enabled: false
+        memory:
+          enabled: true
