@@ -40,4 +40,3 @@ subdomains:
   - argocd
   - guestbook
   - k8s
-  - spire-server
