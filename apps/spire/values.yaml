@@ -1,0 +1,16 @@
+---
+spire:
+  spire-server:
+    config:
+      trustDomain: "esuarez.info"
+      enableExperimentalAPI: true
+      oidc:
+        enabled: true
+        audience: sts.amazonaws.com
+      plugins:
+        NodeAttestor "aws_iid":
+          plugin_data:
+            use_instance_metadata: true
+  spire-agent:
+    config:
+      trustDomain: "esuarez.info"
