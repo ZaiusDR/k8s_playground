@@ -4,7 +4,7 @@ spire:
     spire:
       trustDomain: "esuarez.info"
   spire-server:
-    kind: deployment
+    kind: statefulset
     replicaCount: 1
     persistence:
       type: emptyDir
