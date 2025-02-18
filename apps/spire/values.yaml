@@ -12,7 +12,7 @@ spire:
           plugin_data:
             use_instance_metadata: true
     deploymentType: deployment
-    replicaCount: 2
+    replicaCount: 1
     persistence:
       type: emptyDir
     keyManager:
