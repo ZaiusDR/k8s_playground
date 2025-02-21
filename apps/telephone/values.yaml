@@ -1,0 +1,21 @@
+---
+services:
+  - name: producer-front
+    image: "ghcr.io/zaiusdr/producer-front:main"
+    port: 80
+    type: frontend
+
+  - name: producer-back
+    image: "ghcr.io/zaiusdr/producer-back:main"
+    port: 3000
+    type: backend
+
+  - name: consumer-front
+    image: "ghcr.io/zaiusdr/consumer-front:main"
+    port: 80
+    type: frontend
+
+  - name: consumer-back
+    image: "ghcr.io/zaiusdr/consumer-back:main"
+    port: 3000
+    type: backend

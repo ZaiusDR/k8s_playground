@@ -1,0 +1,19 @@
+{{- range .Values.services }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ .name }}-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`{{ .name }}.esuarez.info`)
+      priority: 10
+      services:
+        - name: {{ .name }}-service
+          port: {{ .port }}
+  tls:
+    certResolver: leresolver
+  {{ end }}

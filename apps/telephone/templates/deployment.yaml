@@ -1,0 +1,32 @@
+{{- range .Values.services }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .name }}-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}
+    spec:
+      containers:
+        - name: {{ .name }}
+          image: {{ .image }}
+          ports:
+            - containerPort: {{ .port }}
+          {{ if eq .type "backend" }}
+          volumeMounts:
+            - mountPath: /root/.aws/credentials
+              name: aws-creds
+          {{ end }}
+      {{ if eq .type "backend" }}
+      volumes:
+        - name: aws-creds
+          secret:
+            secretName: aws-telephone-sqs-rw
+      {{ end }}
+{{- end }}

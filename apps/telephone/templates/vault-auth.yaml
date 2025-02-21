@@ -1,0 +1,10 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  name: vault-auth-telephone
+spec:
+  mount: aws
+  method: aws
+  aws:
+    role: telephone-sqs-rw
+    headerValue: vault.esuarez.info
