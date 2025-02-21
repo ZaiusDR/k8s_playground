@@ -40,3 +40,7 @@ subdomains:
   - argocd
   - guestbook
   - k8s
+  - producer-front
+  - producer-back
+  - consumer-front
+  - consumer-back
