@@ -15,6 +15,7 @@ sqs_client = boto3.client("sqs", region_name=AWS_REGION, endpoint_url=AWS_ENDPOI
 
 origins = [
     "http://localhost:8080",
+    "https://producer-front.esuarez.info"
 ]
 
 app.add_middleware(
