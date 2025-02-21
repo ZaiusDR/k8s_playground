@@ -21,6 +21,8 @@ spec:
             - containerPort: {{ .port }}
           {{ if eq .type "backend" }}
           env:
+            - name: AWS_REGION
+              value: "eu-west-3"
             - name: SQS_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
