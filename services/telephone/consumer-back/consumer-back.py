@@ -30,7 +30,7 @@ async def poll_sqs():
         try:
             response = sqs_client.receive_message(
                 QueueUrl=SQS_QUEUE_URL,
-                MaxNumberOfMessages=1,
+                MaxNumberOfMessages=10,
                 WaitTimeSeconds=10,
             )
 
