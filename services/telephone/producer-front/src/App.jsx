@@ -4,8 +4,7 @@ import './App.css'
 function App() {
   const [message, setMessage] = useState("");
   const [response, setResponse] = useState(null);
-  // const API_URL = new URL("/send", import.meta.env.VITE_API_URL).href;
-  const API_URL = "https://producer-back.esuarez.info/send";
+  const API_URL = import.meta.env.VITE_API_URL + "/send";
 
   const sendMessage = async () => {
     if (!message) return alert("Message cannot be empty!");
