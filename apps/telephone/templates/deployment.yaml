@@ -16,9 +16,16 @@ spec:
       containers:
         - name: {{ .name }}
           image: {{ .image }}
+          imagePullPolicy: Always
           ports:
             - containerPort: {{ .port }}
           {{ if eq .type "backend" }}
+          env:
+            - name: SQS_QUEUE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: QueueUrl
+                  name: sqs-config-map
           volumeMounts:
             - mountPath: /root/.aws
               name: aws-creds

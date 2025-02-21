@@ -3,6 +3,10 @@
   set_fact:
     ubuntu_ami_id: "{{ lookup('amazon.aws.aws_ssm', ubuntu_ami_ssm_parameter_path) }}"
 
+- name: Create SQS queue for Telephone
+  community.aws.sqs_queue:
+    name: telephone
+
 - name: Create SSH Access Security Group
   amazon.aws.ec2_security_group:
     name: "ssh-access-sg"
