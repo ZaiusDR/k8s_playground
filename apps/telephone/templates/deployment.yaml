@@ -20,7 +20,7 @@ spec:
             - containerPort: {{ .port }}
           {{ if eq .type "backend" }}
           volumeMounts:
-            - mountPath: /root/.aws/credentials
+            - mountPath: /root/.aws
               name: aws-creds
           {{ end }}
       {{ if eq .type "backend" }}
