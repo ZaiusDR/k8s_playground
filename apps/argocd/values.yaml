@@ -1,5 +1,11 @@
 ---
 argo-cd:
+  global:
+    podLabels:
+      app.newrelic.io/name: argocd
+  controller:
+    metrics:
+      enabled: true
   configs:
     params:
       server.insecure: true
