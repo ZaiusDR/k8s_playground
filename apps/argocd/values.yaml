@@ -3,6 +3,8 @@ argo-cd:
   global:
     podLabels:
       app.newrelic.io/name: argocd
+    podAnnotations:
+      newrelic.io/scrape: true
   controller:
     metrics:
       enabled: true
