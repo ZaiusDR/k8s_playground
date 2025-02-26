@@ -6,13 +6,11 @@ nri-bundle:
     lowDataMode: true
     customSecretName: new-relic-license-key
     customSecretLicenseKey: licenseKey
-  nri-prometheus:
-    enabled: false
   newrelic-infrastructure:
     privileged: true
+  nri-kube-events:
+    enabled: true
   kube-state-metrics:
-    image:
-      tag: v2.13.0
     enabled: true
   newrelic-prometheus-agent:
     enabled: true
