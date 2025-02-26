@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: {{ .name }}
+      annotations:
+        newrelic.io/scrape: "true"
     spec:
       containers:
         - name: {{ .name }}
