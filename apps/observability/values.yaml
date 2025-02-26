@@ -14,11 +14,6 @@ nri-bundle:
     enabled: true
   newrelic-prometheus-agent:
     enabled: true
-    lowDataMode: true
-    config:
-      kubernetes:
-        integrations_filter:
-          enabled: false
   k8s-agents-operator:
     enabled: true
   newrelic-logging:
