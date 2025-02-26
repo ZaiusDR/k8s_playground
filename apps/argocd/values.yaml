@@ -8,6 +8,15 @@ argo-cd:
   controller:
     metrics:
       enabled: true
+  server:
+    metrics:
+      enabled: true
+  repoServer:
+    metrics:
+      enabled: true
+  dex:
+    metrics:
+      enabled: true
   configs:
     params:
       server.insecure: true
