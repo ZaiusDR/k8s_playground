@@ -11,6 +11,7 @@ spec:
   template:
     metadata:
       labels:
+        service: telephone
         app: {{ .name }}
       annotations:
         newrelic.io/scrape: "true"
