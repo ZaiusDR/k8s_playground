@@ -11,9 +11,9 @@ spec:
       - name: NEW_RELIC_APP_NAME
         valueFrom:
           fieldRef:
-            fieldPath: metadata.labels['service']
+            fieldPath: metadata.labels['app']
   podLabelSelector:
     matchExpressions:
-      - key: "service"
+      - key: "app"
         operator: "In"
-        values: ["telephone"]
+        values: ["producer-front", "consumer-front"]
