@@ -47,10 +47,10 @@ jobs:
 
       - name: Run Pulumi
         uses: pulumi/actions@v6
-        working-directory: ./infrastructure/pulumi
         with:
           command: up
           stack-name: k8s-playground
+          work-dir: ./infrastructure/pulumi
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 

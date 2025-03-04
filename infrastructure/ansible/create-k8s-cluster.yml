@@ -1,9 +1,9 @@
 ---
-- name: Deploy K8s Cluster
-  hosts: localhost
-  gather_facts: false
-  roles:
-    - create_ec2_instances
+#- name: Deploy K8s Cluster
+#  hosts: localhost
+#  gather_facts: false
+#  roles:
+#    - create_ec2_instances
 
 - name: Configure HAProxy
   hosts: Role_haproxy
