@@ -2,7 +2,7 @@ import pulumi
 
 import pulumi_aws as aws
 
-from common_infra import ssh_sg
+import common_infra
 
 HA_PROXY_PORTS = {'http': 80, 'https': 443, 'k8s-api': 6443}
 
@@ -27,7 +27,7 @@ ha_proxy = aws.ec2.Instance('ha-proxy',
     ami=ami_id.value,
     instance_type=aws.ec2.InstanceType.T3_MICRO,
     key_name=key_pair.key_name,
-    vpc_security_group_ids=[ssh_sg.id, ha_proxy_sg],
+    vpc_security_group_ids=[common_infra.ssh_sg.id, ha_proxy_sg],
     tags={
         'Name': 'haproxy',
         'Role': 'haproxy'

@@ -15,4 +15,4 @@ aws.vpc.SecurityGroupIngressRule('allow-ssh-access',
     to_port=22
 )
 
-pulumi.export('ssh_access_sg_id', aws.ec2.SecurityGroup('ssh-access-sg').id)
+pulumi.export('ssh_access_sg_id', ssh_sg.id)
