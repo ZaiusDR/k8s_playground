@@ -1,5 +1,4 @@
 import pulumi
-from ansible_collections.ansible.utils.plugins.filter.cidr_merge import cidr_merge
 
 from pulumi_aws import ec2
 
