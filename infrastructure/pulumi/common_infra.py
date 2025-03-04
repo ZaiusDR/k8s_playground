@@ -4,8 +4,7 @@ import pulumi_aws
 
 ssh_sg = pulumi_aws.ec2.SecurityGroup('ssh-access-sg',
     name='ssh-access-sg',
-    description='Security group for accessing by SSH',
-    ingress=['allow-ssh-access']
+    description='Security group for accessing by SSH'
 )
 
 pulumi_aws.vpc.SecurityGroupIngressRule('allow-ssh-access',
