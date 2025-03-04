@@ -24,7 +24,7 @@ for description, port in HA_PROXY_PORTS.items():
         to_port=port)
 
 ha_proxy = aws.ec2.Instance('ha-proxy',
-    ami=ami_id,
+    ami=ami_id.value,
     instance_type=aws.ec2.InstanceType.T3_MICRO,
     key_name=key_pair.key_name,
     vpc_security_group_ids=[common_infra.ssh_sg.id, ha_proxy_sg],
