@@ -1,0 +1,4 @@
+config:
+  aws:defaultTags:
+    tags:
+      Stack: k8s-playground
