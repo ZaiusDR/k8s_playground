@@ -4,3 +4,7 @@ runtime:
   name: python
   options:
     toolchain: pip
+config:
+  aws:defaultTags:
+    tags:
+      stack: k8s-playground
