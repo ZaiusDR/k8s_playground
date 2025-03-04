@@ -16,20 +16,24 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
 #      - name: Lint Code
 #        uses: super-linter/super-linter/slim@v7.2.1
 #        env:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #          ANSIBLE_DIRECTORY: infrastructure/ansible
+
       - name: Get AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: eu-west-3
           role-to-assume: arn:aws:iam::326499071401:role/github-actions-k8s-playground
+
       - name: Setup Python3
         uses: actions/setup-python@v5
         with:
           python-version: 3.13
+
       - name: Pip Cache
         uses: actions/cache@v4
         with:
@@ -37,12 +41,24 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
-      - name: Install Ansible
+
+      - name: Install Dependencies
         run: pip3 install -r requirements.txt
+
+      - name: Run Pulumi
+        uses: pulumi/actions@v6
+        working-directory: ./infrastructure/pulumi
+        with:
+          command: up
+          stack-name: k8s-playground
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
       - name: Prepare Ansible Key-Pair
         run: |
           echo "${{ secrets.ANSIBLE_KEY_PAIR }}" > ./infrastructure/ansible/id_rsa && \
             chmod 0600 ./infrastructure/ansible/id_rsa
-      - name: Provision K8s Cluster
+
+      - name: Configure K8s Cluster
         run: ansible-playbook create-k8s-cluster.yml
         working-directory: ./infrastructure/ansible
