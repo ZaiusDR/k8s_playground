@@ -1,2 +1,3 @@
 import pulumi
 
+import sqs
