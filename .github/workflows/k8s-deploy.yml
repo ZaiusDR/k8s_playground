@@ -42,8 +42,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Install Dependencies
-        run: pip3 install -r requirements.txt
+      - name: Install Pulumi
+        run: pip3 install -r ./infrastructure/pulumi/requirements.txt
 
       - name: Run Pulumi
         uses: pulumi/actions@v6
@@ -53,6 +53,9 @@ jobs:
           work-dir: ./infrastructure/pulumi
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+      - name: Install Ansible
+        run: pip3 install -r requirements.txt
 
       - name: Prepare Ansible Key-Pair
         run: |
