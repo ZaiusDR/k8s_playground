@@ -1,6 +1,0 @@
-name: k8s-playground
-description: K8s Playground Infrastructure
-runtime:
-  name: python
-  options:
-    toolchain: pip

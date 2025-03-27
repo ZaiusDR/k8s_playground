@@ -1,0 +1,11 @@
+name: vault
+description: Vault Server for K8s Playground
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-python

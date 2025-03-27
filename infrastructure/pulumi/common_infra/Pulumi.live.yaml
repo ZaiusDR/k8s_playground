@@ -1,0 +1,6 @@
+config:
+  aws:region: eu-west-3
+  aws:defaultTags:
+    tags:
+      Stack: k8s-playground
+  common_infra:ubuntuAmiIdSSMPath: /aws/service/canonical/ubuntu/server/24.04/stable/current/amd64/hvm/ebs-gp3/ami-id

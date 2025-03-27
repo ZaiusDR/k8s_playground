@@ -49,8 +49,35 @@ jobs:
         uses: pulumi/actions@v6
         with:
           command: up
-          stack-name: ZaiusDR/k8s-playground/live
-          work-dir: ./infrastructure/pulumi
+          stack-name: ZaiusDR/common_infra/live
+          work-dir: ./infrastructure/pulumi/common_infra
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+      - name: Run Pulumi
+        uses: pulumi/actions@v6
+        with:
+          command: up
+          stack-name: ZaiusDR/ha_proxy/live
+          work-dir: ./infrastructure/pulumi/ha_proxy
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+      - name: Run Pulumi
+        uses: pulumi/actions@v6
+        with:
+          command: up
+          stack-name: ZaiusDR/vault/live
+          work-dir: ./infrastructure/pulumi/vault
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+      - name: Run Pulumi
+        uses: pulumi/actions@v6
+        with:
+          command: up
+          stack-name: ZaiusDR/k8s_cluster/live
+          work-dir: ./infrastructure/pulumi/k8s_cluster
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
