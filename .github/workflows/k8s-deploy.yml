@@ -42,8 +42,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Install Pulumi
-        run: pip3 install -r ./infrastructure/pulumi/requirements.txt
+#      - name: Install Pulumi
+#        run: pip3 install -r ./infrastructure/pulumi/requirements.txt
 
       - name: Run Pulumi
         uses: pulumi/actions@v6
