@@ -65,21 +65,23 @@ jobs:
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
-      - name: Run Pulumi
+      - name: Run Pulumi Vault
         uses: pulumi/actions@v6
         with:
           command: up
           stack-name: ZaiusDR/vault/live
           work-dir: ./infrastructure/pulumi/vault
+          refresh: true
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
-      - name: Run Pulumi
+      - name: Run Pulumi K8s Cluster
         uses: pulumi/actions@v6
         with:
           command: up
           stack-name: ZaiusDR/k8s_cluster/live
           work-dir: ./infrastructure/pulumi/k8s_cluster
+          refresh: true
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
