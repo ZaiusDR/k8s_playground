@@ -52,6 +52,7 @@ jobs:
           stack-name: ZaiusDR/common_infra/live
           work-dir: ./infrastructure/pulumi/common_infra
           refresh: true
+          color: always
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
@@ -62,6 +63,7 @@ jobs:
           stack-name: ZaiusDR/ha_proxy/live
           work-dir: ./infrastructure/pulumi/ha_proxy
           refresh: true
+          color: always
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
@@ -72,6 +74,7 @@ jobs:
           stack-name: ZaiusDR/vault/live
           work-dir: ./infrastructure/pulumi/vault
           refresh: true
+          color: always
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
@@ -82,6 +85,7 @@ jobs:
           stack-name: ZaiusDR/k8s_cluster/live
           work-dir: ./infrastructure/pulumi/k8s_cluster
           refresh: true
+          color: always
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
