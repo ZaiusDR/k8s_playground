@@ -55,12 +55,13 @@ jobs:
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
-      - name: Run Pulumi
+      - name: Run Pulumi HA Proxy
         uses: pulumi/actions@v6
         with:
           command: up
           stack-name: ZaiusDR/ha_proxy/live
           work-dir: ./infrastructure/pulumi/ha_proxy
+          refresh: true
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
