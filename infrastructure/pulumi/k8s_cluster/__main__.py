@@ -92,7 +92,7 @@ aws.vpc.SecurityGroupIngressRule(
     to_port=32767,
 )
 
-for node in [1, 2]:
+for node in range(1, 4):
     aws.ec2.Instance(
         resource_name=f'control-node0{node}',
         ami=common_infra_outputs.get_output('ami_id'),
