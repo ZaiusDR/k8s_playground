@@ -45,12 +45,13 @@ jobs:
 #      - name: Install Pulumi
 #        run: pip3 install -r ./infrastructure/pulumi/requirements.txt
 
-      - name: Run Pulumi
+      - name: Run Pulumi Common Infra
         uses: pulumi/actions@v6
         with:
           command: up
           stack-name: ZaiusDR/common_infra/live
           work-dir: ./infrastructure/pulumi/common_infra
+          refresh: true
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
