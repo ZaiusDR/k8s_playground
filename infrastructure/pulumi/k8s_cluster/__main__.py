@@ -53,7 +53,7 @@ add_rules_to_security_group(COMMON_UDP_PORTS, control_plane_sg, vpc_cidr, 'contr
 control_plane_instance = aws.ec2.Instance(
     resource_name='control-plane01',
     ami=common_infra_outputs.get_output('ami_id'),
-    instance_type=aws.ec2.InstanceType.T3_SMALL,
+    instance_type=aws.ec2.InstanceType.T3A_SMALL,
     key_name=common_infra_outputs.get_output('key_pair')['key_name'],
     vpc_security_group_ids=[common_infra_outputs.get_output('ssh_access_sg_id'), control_plane_sg.id],
     availability_zone='eu-west-3a',
@@ -96,7 +96,7 @@ for node in range(1, 4):
     aws.ec2.Instance(
         resource_name=f'control-node0{node}',
         ami=common_infra_outputs.get_output('ami_id'),
-        instance_type=aws.ec2.InstanceType.T3_SMALL,
+        instance_type=aws.ec2.InstanceType.T3A_MEDIUM,
         key_name=common_infra_outputs.get_output('key_pair')['key_name'],
         vpc_security_group_ids=[common_infra_outputs.get_output('ssh_access_sg_id'), control_plane_sg.id],
         availability_zone='eu-west-3a',
