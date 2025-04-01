@@ -13,10 +13,13 @@ spec:
     namespace: istio-system
     server: {{ .Values.spec.destination.server }}
   project: {{ .Values.spec.project }}
-  source:
-    path: apps/istio
-    repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision }}
+  sources:
+    - path: apps/istio
+      repoURL: {{ .Values.spec.source.repoURL }}
+      targetRevision: {{ .Values.spec.source.targetRevision }}
+    - path: samples/addons/prometheus.yaml
+      repoURL: https://github.com/istio/istio.git
+      targetRevision: {{ .Values.spec.source.targetRevision }}
   syncPolicy:
     automated:
       selfHeal: true
