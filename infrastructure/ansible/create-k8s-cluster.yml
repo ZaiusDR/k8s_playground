@@ -1,42 +1,42 @@
 ---
 - name: Configure HAProxy
   hosts: Role_haproxy
-  gather_facts: true
+  gather_facts: false
   become: true
   roles:
     - configure_haproxy
 
 - name: Configure Vault
   hosts: Role_vault
-  gather_facts: true
+  gather_facts: false
   become: true
   roles:
     - configure_vault
 
 - name: Provision common components
   hosts: Cluster_k8s_cluster_node
-  gather_facts: true
+  gather_facts: false
   become: true
   roles:
     - install_common_components
 
 - name: Configure Control Plane node
   hosts: Role_control_plane
-  gather_facts: true
+  gather_facts: false
   become: true
   roles:
     - configure_control_plane
 
 - name: Configure Worker Nodes
   hosts: Role_worker
-  gather_facts: true
+  gather_facts: false
   become: true
   roles:
     - configure_worker_nodes
 
 - name: Install Networking Components
   hosts: Role_control_plane
-  gather_facts: true
+  gather_facts: false
   become: true
   roles:
     - install_k8s_network_solution

@@ -20,6 +20,8 @@
     src: /root/.kube/config
     dest: ~/.kube/config
     flat: yes
+  tags:
+    - get_config
 
 - name: Set Kubectl Autocomplete and Alias
   ansible.builtin.lineinfile:

@@ -71,7 +71,7 @@ aws.kms.Key(
 hosted_zone = aws.route53.get_zone(name='esuarez.info.', private_zone=True)
 
 aws.route53.Record(
-    resource_name=f'vault-private-record',
+    resource_name='vault-private-record',
     zone_id=hosted_zone.id,
     name='vault.esuarez.info',
     type=aws.route53.RecordType.A,
