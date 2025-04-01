@@ -16,4 +16,4 @@ spec:
           port: {{ .port }}
   tls:
     certResolver: leresolver
-  {{ end }}
+{{- end }}
