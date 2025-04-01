@@ -92,7 +92,7 @@ aws.vpc.SecurityGroupIngressRule(
     to_port=32767,
 )
 
-for node in range(1, 3):
+for node in range(1, 4):
     aws.ec2.Instance(
         resource_name=f'control-node0{node}',
         ami=common_infra_outputs.get_output('ami_id'),
@@ -112,7 +112,7 @@ for node in range(1, 3):
 hosted_zone = aws.route53.get_zone(name='esuarez.info.', private_zone=True)
 
 aws.route53.Record(
-    resource_name=f'k8s-private-record',
+    resource_name='k8s-private-record',
     zone_id=hosted_zone.id,
     name='k8s.esuarez.info',
     type=aws.route53.RecordType.A,
