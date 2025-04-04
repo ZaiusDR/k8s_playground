@@ -175,3 +175,6 @@ cython_debug/
 
 # Ansible
 id_rsa
+
+# Port Forwarding
+port_forwarding.sh
